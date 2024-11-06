@@ -40,7 +40,7 @@ public class AppiumTest {
         caps.setCapability("appium:newCommandTimeout", 3600);
         caps.setCapability("appium:connectHardwareKeyboard", true);
 
-        driver = new AndroidDriver(this.getUrl(), caps);
+        driver = new AppiumDriver(this.getUrl(), caps);
         //driver = new AppiumDriver<>(new URL("http://127.0.0.1:4723"), caps);
 
     }
@@ -55,8 +55,8 @@ public class AppiumTest {
 
         String resultText = mainScreen.mainScreenText.getText();*/
 
-         String textToBeChanged = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
-      driver.findElementById("ru.netology.testing.uiautomator:id/userInput").sendKeys("");
+        String textToBeChanged = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
+        driver.findElementById("ru.netology.testing.uiautomator:id/userInput").sendKeys("");
         MobileElement changeTextButton = (MobileElement) driver.findElementById("ru.netology.testing.uiautomator:id/buttonChange");
         changeTextButton.click();
         String resultText = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
