@@ -4,19 +4,19 @@ import io.appium.java_client.MobileElement;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
-import io.appium.java_client.android.AndroidDriver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import screens.MainScreen;
 
 public class AppiumTest {
 
     private AppiumDriver driver;
     //private MainScreen mainScreen;
+    private final String textToSet = "Hello!";
 
     private URL getUrl() {
         try {
@@ -41,6 +41,7 @@ public class AppiumTest {
         caps.setCapability("appium:connectHardwareKeyboard", true);
 
         driver = new AppiumDriver(this.getUrl(), caps);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         //driver = new AppiumDriver<>(new URL("http://127.0.0.1:4723"), caps);
 
     }
@@ -62,6 +63,18 @@ public class AppiumTest {
         String resultText = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
 
         Assertions.assertEquals(textToBeChanged, resultText);
+    }
+
+    @Test
+    public void setNewActivityTest() {
+        driver.findElementById("ru.netology.testing.uiautomator:id/userInput").sendKeys(textToSet);
+
+        MobileElement openTextInAnotherActivityButton = (MobileElement) driver.findElementById("ru.netology.testing.uiautomator:id/buttonActivity");
+        openTextInAnotherActivityButton.click();
+        driver.findElementById("ru.netology.testing.uiautomator:id/text").isDisplayed();
+        String resultText = driver.findElementById("ru.netology.testing.uiautomator:id/text").getText();
+
+        Assertions.assertEquals(textToSet, resultText);
     }
 
     @AfterEach
