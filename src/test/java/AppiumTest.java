@@ -1,10 +1,8 @@
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -42,12 +40,11 @@ public class AppiumTest {
         caps.setCapability("appium:connectHardwareKeyboard", true);
 
         driver = new AppiumDriver(this.getUrl(), caps);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        mainScreen = new MainScreen(driver);
     }
 
     @Test
     public void changeToEmptyTextTest() {
-        mainScreen = new MainScreen(driver);
         String textToBeChanged = mainScreen.mainScreenText.getText();
 
         mainScreen.userInput.sendKeys("");
@@ -57,27 +54,18 @@ public class AppiumTest {
 
         Assertions.assertEquals(textToBeChanged, resultText);
 
-/*
-        String textToBeChanged = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
-        driver.findElementById("ru.netology.testing.uiautomator:id/userInput").sendKeys("");
-        MobileElement changeTextButton = (MobileElement) driver.findElementById("ru.netology.testing.uiautomator:id/buttonChange");
-        changeTextButton.click();
-        String resultText = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
-*/
-
-
     }
 
     @Test
     public void setNewActivityTest() {
-        driver.findElementById("ru.netology.testing.uiautomator:id/userInput").sendKeys(textToSet);
+        mainScreen.userInput.sendKeys(textToSet);
+        mainScreen.openTextInAnotherActivityButton.click();
 
-        MobileElement openTextInAnotherActivityButton = (MobileElement) driver.findElementById("ru.netology.testing.uiautomator:id/buttonActivity");
-        openTextInAnotherActivityButton.click();
-        driver.findElementById("ru.netology.testing.uiautomator:id/text").isDisplayed();
-        String resultText = driver.findElementById("ru.netology.testing.uiautomator:id/text").getText();
+        mainScreen.textNewActivity.isDisplayed();
+        String resultText = mainScreen.textNewActivity.getText();
 
         Assertions.assertEquals(textToSet, resultText);
+
     }
 
     @AfterEach
