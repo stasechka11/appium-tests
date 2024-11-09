@@ -14,7 +14,7 @@ public class MainScreen {
     @AndroidFindBy(id = "ru.netology.testing.uiautomator:id/textToBeChanged")
     public MobileElement mainScreenText;
 
-    @AndroidFindBy(id = "")
+    @AndroidFindBy(id = "ru.netology.testing.uiautomator:id/userInput")
     public MobileElement userInput;
 
     @AndroidFindBy(id = "ru.netology.testing.uiautomator:id/buttonChange")

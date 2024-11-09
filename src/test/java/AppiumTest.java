@@ -11,11 +11,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import screens.MainScreen;
 
 public class AppiumTest {
 
     private AppiumDriver driver;
-    //private MainScreen mainScreen;
+    private MainScreen mainScreen;
     private final String textToSet = "Hello!";
 
     private URL getUrl() {
@@ -42,27 +43,29 @@ public class AppiumTest {
 
         driver = new AppiumDriver(this.getUrl(), caps);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        //driver = new AppiumDriver<>(new URL("http://127.0.0.1:4723"), caps);
-
     }
 
     @Test
     public void changeToEmptyTextTest() {
-       /* MainScreen mainScreen = new MainScreen(driver);
+        mainScreen = new MainScreen(driver);
         String textToBeChanged = mainScreen.mainScreenText.getText();
 
         mainScreen.userInput.sendKeys("");
         mainScreen.changeTextButton.click();
 
-        String resultText = mainScreen.mainScreenText.getText();*/
+        String resultText = mainScreen.mainScreenText.getText();
 
+        Assertions.assertEquals(textToBeChanged, resultText);
+
+/*
         String textToBeChanged = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
         driver.findElementById("ru.netology.testing.uiautomator:id/userInput").sendKeys("");
         MobileElement changeTextButton = (MobileElement) driver.findElementById("ru.netology.testing.uiautomator:id/buttonChange");
         changeTextButton.click();
         String resultText = driver.findElementById("ru.netology.testing.uiautomator:id/textToBeChanged").getText();
+*/
 
-        Assertions.assertEquals(textToBeChanged, resultText);
+
     }
 
     @Test
